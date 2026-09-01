@@ -1,4 +1,5 @@
 {
+  "name": "saviskar-registration-portal",
   "dependencies": {
     "@aws-sdk/client-ses": "^3.890.0",
     "cors": "^2.8.5",
