@@ -8,26 +8,31 @@ const { SESClient, SendRawEmailCommand } = require("@aws-sdk/client-ses");
 const app = express();
 
 // Updated CORS configuration to handle multiple origins
+const frontendUrl = process.env.FRONTEND_URL || '';
+const baseDomain = frontendUrl.replace(/^https?:\/\//, '').replace(/^www\./, '');
+
 const allowedOrigins = [
   'http://127.0.0.1:5500/Public/',
   'http://localhost:3000', // For local development
   'http://localhost:3001', // Node server
   'http://localhost', // XAMPP default
   'https://registrations.saviskar.co.in', // Your old domain
-  'https://13.255.106.225', // Your server's public IP
-  process.env.FRONTEND_URL // Dynamic frontend URL for Render
+  'https://13.255.106.225' // Your server's public IP
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Check if the origin is in the allowed list or if it's a server-to-server request
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      console.log('REJECTED ORIGIN:', origin);
-      callback(new Error('Not allowed by CORS'));
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
     }
+    // Dynamically allow any http/https or www variant of the FRONTEND_URL
+    if (baseDomain && origin.includes(baseDomain)) {
+      return callback(null, true);
+    }
+    callback(new Error('Not allowed by CORS'));
   },
+  credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   optionsSuccessStatus: 204
 };
