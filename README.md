@@ -80,4 +80,4 @@ Open your browser and navigate to:
 3. When the user submits the signup form, the frontend communicates with the PHP API running on port `8000` (`http://localhost:8000/saviskar_api/signup.php`).
 
 ---
-*Built with ❤️ for Saviskar 2025.*
+*Built for Saviskar 2025.*
