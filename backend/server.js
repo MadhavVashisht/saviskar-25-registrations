@@ -13,8 +13,9 @@ const allowedOrigins = [
   'http://localhost:3000', // For local development
   'http://localhost:3001', // Node server
   'http://localhost', // XAMPP default
-  'https://registrations.saviskar.co.in', // Your domain
-  'https://13.255.106.225' // Your server's public IP
+  'https://registrations.saviskar.co.in', // Your old domain
+  'https://13.255.106.225', // Your server's public IP
+  process.env.FRONTEND_URL // Dynamic frontend URL for Render
 ];
 
 const corsOptions = {
